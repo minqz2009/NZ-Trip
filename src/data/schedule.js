@@ -388,8 +388,8 @@ export const activities = [
   {
     id: "22-4",
     date: "2026-07-22",
-    startTime: "21:00",
-    endTime: "23:00",
+    startTime: "21:30",
+    endTime: "22:00",
     title: "✈️ CiCi & Kenny Arrive (QF123)",
     location: "Queenstown Airport (ZQN)",
     coordinates: [-45.021, 168.739],
@@ -399,24 +399,24 @@ export const activities = [
     isLogistics: true,
     link: "https://zh.flightaware.com/live/flight/QFA123",
   },
-
-  // ────── July 23 ──────
   {
-    id: "23-0c",
-    date: "2026-07-23",
-    startTime: "07:00",
-    endTime: "07:30",
+    id: "22-5c",
+    date: "2026-07-22",
+    startTime: "21:30",
+    endTime: "22:00",
     title: "🚗 CiCi & Kenny Pick Up Car",
     location: EZI_CAR_RENTAL.location,
     navAddress: EZI_CAR_RENTAL.navAddress,
     coordinates: EZI_CAR_RENTAL.coordinates,
     participants: ["CiCi & Kenny"],
-    description: "CiCi & Kenny 在机场取车，点开查看预订号",
-    sequence: 1,
+    description: "落地后直接在机场 Ezi Car Rental 取车\n注意：租车行 11pm 关门，务必准时",
+    sequence: 5,
     isLogistics: true,
     link: "/NZ-Trip/car_rental_kenny.png",
     reservations: [RES_CK],
   },
+
+  // ────── July 23 ──────
   {
     id: "23-1",
     date: "2026-07-23",
