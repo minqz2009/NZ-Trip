@@ -330,7 +330,6 @@ export const activities = [
     link: "https://book.hydroattack.co.nz/",
   },
   {
-  {
     id: "21-2",
     date: "2026-07-21",
     startTime: "12:00",
