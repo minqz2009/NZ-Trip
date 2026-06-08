@@ -144,7 +144,7 @@ export const activities = [
     coordinates: [-45.0285, 168.6575],
     participants: FOUR,
     description:
-      "最晚入园 4:15pm (关门 5pm)\nKiwi encounter: 10/11/12:15/1/2/3:45/4:30\nConservation show: 11:30am / 3pm\n现场购票 NZ$65.6pp",
+      "目标 3:45pm 场次\n最晚入园 4:15pm (关门 5pm)\nKiwi encounter: 10/11/12:15/1/2/3:45/4:30\nConservation show: 11:30am / 3pm\n现场购票 NZ$65.6pp",
     sequence: 4,
     link: "https://kiwibird.co.nz/",
   },
