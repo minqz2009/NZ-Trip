@@ -371,18 +371,23 @@ export default function App() {
     })).filter(p => p.coords.length > 1);
   }, [filteredActivities]);
 
-  // Adjust map bounds when activities change
+  // Re-center map when the selected day changes
   useEffect(() => {
     if (filteredActivities.length > 0) {
       const lats = filteredActivities.map(a => a.coordinates[0]);
       const lngs = filteredActivities.map(a => a.coordinates[1]);
-      const centerLat = (Math.max(...lats) + Math.min(...lats)) / 2;
-      const centerLng = (Math.max(...lngs) + Math.min(...lngs)) / 2;
-      setMapCenter([centerLat, centerLng]);
-      setMapZoom(selectedDay === 'All' ? 8 : (filteredActivities.length === 1 ? 13 : 10));
+      const center = [
+        (Math.max(...lats) + Math.min(...lats)) / 2,
+        (Math.max(...lngs) + Math.min(...lngs)) / 2,
+      ];
+      const zoom = selectedDay === 'All' ? 8 : QUEENSTOWN_ZOOM;
+      setMapCenter(center);
+      setMapZoom(zoom);
+      mapRef.current?.flyTo(center, zoom, { duration: 1.2 });
     } else {
       setMapCenter(nzCenter);
-      setMapZoom(6);
+      setMapZoom(QUEENSTOWN_ZOOM);
+      mapRef.current?.flyTo(nzCenter, QUEENSTOWN_ZOOM, { duration: 1.2 });
     }
   }, [filteredActivities, selectedDay]);
 
