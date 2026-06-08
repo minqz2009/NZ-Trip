@@ -373,7 +373,17 @@ export default function App() {
     }
   }, [filteredActivities, selectedDay]);
 
-  const createMarkerIcon = (color, sequence, status) => {
+  const createMarkerIcon = (color, sequence, status, isSelected) => {
+    if (isSelected) {
+      return L.divIcon({
+        className: 'custom-marker-wrapper',
+        html: `<div class="custom-marker selected-marker" style="background:${color}; border-color:${color}; color:#fff;">
+                ${sequence}
+               </div>`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+    }
     return L.divIcon({
       className: 'custom-marker-wrapper',
       html: `<div class="custom-marker status-${status}" style="border-color: ${color}; color: ${color};">
@@ -426,7 +436,7 @@ export default function App() {
             <Marker 
               key={activity.id} 
               position={activity.coordinates}
-              icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now))}
+              icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now), selectedActivity?.id === activity.id)}
               eventHandlers={{
                 click: () => focusMap(activity.coordinates, 14)
               }}

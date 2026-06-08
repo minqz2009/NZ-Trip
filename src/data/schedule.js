@@ -7,8 +7,9 @@ export const couples = [
 ];
 
 // Everyone shortcuts
-const FIVE = ["Daniel & Rella", "Yahnis & Gloria", "Lucy"];
-const ALL = ["Daniel & Rella", "Yahnis & Gloria", "CiCi & Kenny", "Lucy"];
+const FOUR = ["Daniel & Rella", "Yahnis & Gloria"];          // before Lucy arrives
+const FIVE = ["Daniel & Rella", "Yahnis & Gloria", "Lucy"];  // after Lucy arrives Jul 19
+const ALL  = ["Daniel & Rella", "Yahnis & Gloria", "CiCi & Kenny", "Lucy"];
 
 export const nzCenter = [-45.0312, 168.6626]; // Queenstown
 
@@ -48,7 +49,8 @@ export const days = [
 // Derive a consistent color from the participant set
 const colorMap = {
   all: "#3b82f6",       // Blue - everyone (7 people)
-  five: "#6366f1",      // Indigo - the original 5
+  five: "#6366f1",      // Indigo - Daniel, Rella, Yahnis, Gloria, Lucy
+  four: "#818cf8",      // Soft indigo - Daniel, Rella, Yahnis, Gloria (before Lucy)
   yg: "#a855f7",        // Purple - Yahnis & Gloria only
   drl: "#06b6d4",       // Cyan - Daniel, Rella & Lucy
   lucy: "#ec4899",      // Pink - Lucy only
@@ -61,6 +63,7 @@ function getParticipantColor(participants, isLogistics) {
   const key = participants.map(p => p).sort().join("|");
   if (key === ALL.sort().join("|")) return colorMap.all;
   if (key === FIVE.sort().join("|")) return colorMap.five;
+  if (key === FOUR.sort().join("|")) return colorMap.four;
   if (key === ["Yahnis & Gloria"].join("|")) return colorMap.yg;
   if (key === ["Daniel & Rella", "Lucy"].sort().join("|")) return colorMap.drl;
   if (key === ["Lucy"].join("|")) return colorMap.lucy;
@@ -92,13 +95,14 @@ export const activities = [
     date: "2026-07-18",
     startTime: "09:00",
     endTime: "13:00",
-    title: "✈️ Flight to Queenstown",
+    title: "✈️ Flight to Queenstown (VA161)",
     location: "Queenstown Airport (ZQN)",
     coordinates: [-45.021, 168.739],
-    participants: FIVE,
-    description: "各自买机票飞往皇后镇",
+    participants: FOUR,
+    description: "Daniel, Rella, Yahnis & Gloria 乘 VA161/VOZ161 飞往皇后镇",
     sequence: 1,
     isLogistics: true,
+    link: "https://zh.flightaware.com/live/flight/VOZ161",
   },
   {
     id: "18-2c",
@@ -109,7 +113,7 @@ export const activities = [
     location: EZI_CAR_RENTAL.location,
     navAddress: EZI_CAR_RENTAL.navAddress,
     coordinates: EZI_CAR_RENTAL.coordinates,
-    participants: FIVE,
+    participants: FOUR,
     description: "落地后在机场 Ezi Car Rental 取车，点开查看预订号",
     sequence: 2,
     isLogistics: true,
@@ -124,7 +128,7 @@ export const activities = [
     title: "🏠 Check-in Dart Retreat",
     location: "Queenstown Dart Retreat, Frankton",
     coordinates: [-45.022, 168.745],
-    participants: FIVE,
+    participants: FOUR,
     description: "前往 Dart Retreat 入住",
     sequence: 3,
     isLogistics: true,
@@ -138,7 +142,7 @@ export const activities = [
     title: "🥝 Kiwi Park",
     location: "Kiwi Birdlife Park, Brecon St",
     coordinates: [-45.0285, 168.6575],
-    participants: FIVE,
+    participants: FOUR,
     description:
       "最晚入园 4:15pm (关门 5pm)\nKiwi encounter: 10/11/12:15/1/2/3:45/4:30\nConservation show: 11:30am / 3pm\n现场购票 NZ$65.6pp",
     sequence: 4,
@@ -168,8 +172,8 @@ export const activities = [
     title: "🍽️ Lunch in Queenstown",
     location: "Queenstown CBD",
     coordinates: [-45.0312, 168.6626],
-    participants: FIVE,
-    description: "市区午餐",
+    participants: FOUR,
+    description: "市区午餐 (Lucy 尚未到达)",
     sequence: 2,
   },
   {
@@ -379,6 +383,7 @@ export const activities = [
     description: "CiCi 和 Kenny 晚上抵达，航班 QF123",
     sequence: 4,
     isLogistics: true,
+    link: "https://zh.flightaware.com/live/flight/QFA123",
   },
 
   // ────── July 23 ──────
@@ -479,6 +484,20 @@ export const activities = [
     participants: ALL,
     description: "最后一晚聚餐 🍷",
     sequence: 3,
+  },
+  {
+    id: "26-3",
+    date: "2026-07-26",
+    startTime: "21:00",
+    endTime: "23:59",
+    title: "✈️ Flight Home (JQ224)",
+    location: "Queenstown Airport (ZQN)",
+    coordinates: [-45.021, 168.739],
+    participants: ["Daniel & Rella", "Yahnis & Gloria"],
+    description: "Daniel, Rella, Yahnis & Gloria 乘 JQ224 回程",
+    sequence: 4,
+    isLogistics: true,
+    link: "https://zh.flightaware.com/live/flight/JST224",
   },
 ];
 
