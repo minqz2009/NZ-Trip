@@ -694,26 +694,28 @@ export default function App() {
           </div>
 
           <div className="activities-list" style={{ marginTop: '1rem' }}>
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence initial={false}>
               {filteredActivities.length === 0 ? (
-                <motion.p 
+                <motion.p
+                  key="empty"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   style={{ color: 'var(--text-secondary)', textAlign: 'center', marginTop: '2rem', width: '100%' }}
                 >
                   No activities scheduled for this selection.
                 </motion.p>
               ) : (
-                filteredActivities.map((activity, index) => {
+                filteredActivities.map((activity) => {
                   const status = getActivityStatus(activity, now);
                   const statusMeta = STATUS_META[status];
                   return (
                   <motion.div
                     key={activity.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ delay: index * 0.05 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                     className={`activity-card status-${status}`}
                     style={{ '--card-accent': activity.color }}
                     onClick={(e) => {
