@@ -465,7 +465,8 @@ export default function App() {
               icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now), highlightedId === activity.id)}
               eventHandlers={{
                 click: () => {
-                  focusMap(activity.coordinates, 14);
+                  const zoom = mapRef.current?.getZoom() ?? 14;
+                  focusMap(activity.coordinates, zoom);
                   setHighlightedId(activity.id);
                 }
               }}
@@ -717,7 +718,8 @@ export default function App() {
                     style={{ '--card-accent': activity.color }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      focusMap(activity.coordinates, 14);
+                      const zoom = mapRef.current?.getZoom() ?? 14;
+                      focusMap(activity.coordinates, zoom);
                       setHighlightedId(activity.id);
                     }}
                   >
