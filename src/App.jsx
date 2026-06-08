@@ -693,29 +693,27 @@ export default function App() {
             })}
           </div>
 
-          <div className="activities-list" style={{ marginTop: '1rem' }}>
-            <AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${selectedDay}-${selectedCouple}`}
+              className="activities-list"
+              style={{ marginTop: '1rem' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
               {filteredActivities.length === 0 ? (
-                <motion.p
-                  key="empty"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  style={{ color: 'var(--text-secondary)', textAlign: 'center', marginTop: '2rem', width: '100%' }}
-                >
+                <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginTop: '2rem', width: '100%' }}>
                   No activities scheduled for this selection.
-                </motion.p>
+                </p>
               ) : (
                 filteredActivities.map((activity) => {
                   const status = getActivityStatus(activity, now);
                   const statusMeta = STATUS_META[status];
                   return (
-                  <motion.div
+                  <div
                     key={activity.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
                     className={`activity-card status-${status}`}
                     style={{ '--card-accent': activity.color }}
                     onClick={(e) => {
@@ -757,12 +755,12 @@ export default function App() {
                         Details <ChevronRight size={14} />
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                   );
                 })
               )}
-            </AnimatePresence>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
 
       </div>
