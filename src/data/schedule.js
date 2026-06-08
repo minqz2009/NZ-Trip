@@ -72,6 +72,19 @@ function getParticipantColor(participants, isLogistics) {
   return `hsl(${hue}, 65%, 55%)`;
 }
 
+// Shared rental-car pickup/return location (Ezi Car Rental, Queenstown Airport)
+const EZI_CAR_RENTAL = {
+  location: "Ezi Car Rental – Queenstown Airport",
+  navAddress:
+    "Ezi Car Rental Queenstown Airport, Sir Henry Wigley Drive, Frankton, Queenstown 9300, New Zealand",
+  coordinates: [-45.0220501, 168.7397107],
+  link: "https://www.google.com/maps/dir/-33.9692747,151.0184134/Ezi+Car+Rental+-+Queenstown+Airport,+Sir+Henry+Wigley+Drive,+Frankton,+Queenstown+9300,+New+Zealand/@-39.0131992,149.2870529,5z/data=!4m9!4m8!1m1!4e1!1m5!1m1!1s0xa9d51e46ee087a1b:0x94c84d3258033b2e!2m2!1d168.7397107!2d-45.0220501?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D",
+};
+
+// Rental reservations
+const RES_MAIN = { label: "Daniel Chen & Rella", number: "R1QBF7" };
+const RES_CK = { label: "CiCi & Kenny", number: "R1QBFF" };
+
 export const activities = [
   // ────── July 18 ──────
   {
@@ -88,16 +101,32 @@ export const activities = [
     isLogistics: true,
   },
   {
+    id: "18-2c",
+    date: "2026-07-18",
+    startTime: "13:00",
+    endTime: "13:45",
+    title: "🚗 Pick Up Rental Car",
+    location: EZI_CAR_RENTAL.location,
+    navAddress: EZI_CAR_RENTAL.navAddress,
+    coordinates: EZI_CAR_RENTAL.coordinates,
+    participants: FIVE,
+    description: "落地后在机场 Ezi Car Rental 取车，点开查看预订号",
+    sequence: 2,
+    isLogistics: true,
+    link: EZI_CAR_RENTAL.link,
+    reservations: [RES_MAIN],
+  },
+  {
     id: "18-2",
     date: "2026-07-18",
     startTime: "14:00",
     endTime: "15:30",
-    title: "🚗 Pick Up Car & Check-in",
+    title: "🏠 Check-in Dart Retreat",
     location: "Queenstown Dart Retreat, Frankton",
     coordinates: [-45.022, 168.745],
     participants: FIVE,
-    description: "取车后前往 Dart Retreat 入住",
-    sequence: 2,
+    description: "前往 Dart Retreat 入住",
+    sequence: 3,
     isLogistics: true,
     link: "https://www.booking.com/hotel/nz/dart-retreat-queenstown-with-parking.en-gb.html",
   },
@@ -112,7 +141,7 @@ export const activities = [
     participants: FIVE,
     description:
       "最晚入园 4:15pm (关门 5pm)\nKiwi encounter: 10/11/12:15/1/2/3:45/4:30\nConservation show: 11:30am / 3pm\n现场购票 NZ$65.6pp",
-    sequence: 3,
+    sequence: 4,
     link: "https://kiwibird.co.nz/",
   },
 
@@ -354,6 +383,22 @@ export const activities = [
 
   // ────── July 23 ──────
   {
+    id: "23-0c",
+    date: "2026-07-23",
+    startTime: "07:00",
+    endTime: "07:30",
+    title: "🚗 CiCi & Kenny Pick Up Car",
+    location: EZI_CAR_RENTAL.location,
+    navAddress: EZI_CAR_RENTAL.navAddress,
+    coordinates: EZI_CAR_RENTAL.coordinates,
+    participants: ["CiCi & Kenny"],
+    description: "CiCi & Kenny 在机场取车，点开查看预订号",
+    sequence: 1,
+    isLogistics: true,
+    link: EZI_CAR_RENTAL.link,
+    reservations: [RES_CK],
+  },
+  {
     id: "23-1",
     date: "2026-07-23",
     startTime: "08:00",
@@ -363,7 +408,7 @@ export const activities = [
     coordinates: [-44.9282, 168.7369],
     participants: ALL,
     description: "全员滑雪 Day 1",
-    sequence: 1,
+    sequence: 2,
   },
 
   // ────── July 24 ──────
@@ -408,6 +453,22 @@ export const activities = [
     sequence: 1,
   },
   {
+    id: "26-1r",
+    date: "2026-07-26",
+    startTime: "16:30",
+    endTime: "17:00",
+    title: "🔄 Return Rental Cars",
+    location: EZI_CAR_RENTAL.location,
+    navAddress: EZI_CAR_RENTAL.navAddress,
+    coordinates: EZI_CAR_RENTAL.coordinates,
+    participants: ALL,
+    description: "滑雪结束后在机场还车，点开查看两组预订号",
+    sequence: 2,
+    isLogistics: true,
+    link: EZI_CAR_RENTAL.link,
+    reservations: [RES_MAIN, RES_CK],
+  },
+  {
     id: "26-2",
     date: "2026-07-26",
     startTime: "18:00",
@@ -417,7 +478,7 @@ export const activities = [
     coordinates: [-45.0312, 168.6626],
     participants: ALL,
     description: "最后一晚聚餐 🍷",
-    sequence: 2,
+    sequence: 3,
   },
 ];
 

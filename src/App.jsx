@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Navigation, Calendar, Users, Lock, ExternalLink, Clock, Home, RotateCcw, ChevronRight, X } from 'lucide-react';
+import { MapPin, Navigation, Calendar, Users, Lock, ExternalLink, Clock, Home, RotateCcw, ChevronRight, X, Crosshair, Ticket } from 'lucide-react';
 import { format, parseISO, differenceInCalendarDays } from 'date-fns';
 import {
   activities,
@@ -27,6 +27,22 @@ const STATUS_META = {
 // Format a Date for an <input type="datetime-local">
 function toLocalInputValue(date) {
   return format(date, "yyyy-MM-dd'T'HH:mm");
+}
+
+// Navigation helpers — both apps search by ADDRESS (not raw coordinates),
+// so the destination shows its real name/place card.
+function openGoogleMaps(query) {
+  window.open(
+    `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`,
+    '_blank'
+  );
+}
+function openWaze(query) {
+  window.open(`https://waze.com/ul?q=${encodeURIComponent(query)}&navigate=yes`, '_blank');
+}
+// Best address string to navigate to for an activity.
+function activityNavQuery(activity) {
+  return activity.navAddress || `${activity.location}, New Zealand`;
 }
 
 // Correct hash for 'nz2026'
@@ -107,15 +123,11 @@ function MapUpdater({ center, zoom }) {
 // Detail "page" for a place we're staying, with navigation options.
 function AccommodationModal({ accommodation, onClose }) {
   if (!accommodation) return null;
-  const [lat, lng] = accommodation.coordinates;
   const nights = differenceInCalendarDays(
     parseISO(accommodation.endDate),
     parseISO(accommodation.startDate)
   );
-  const openGoogleMaps = () =>
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
-  const openWaze = () =>
-    window.open(`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`, '_blank');
+  const navQuery = accommodation.address || accommodation.name;
 
   return (
     <motion.div
@@ -160,10 +172,10 @@ function AccommodationModal({ accommodation, onClose }) {
         </div>
 
         <div className="accommodation-actions">
-          <button className="nav-btn nav-gmaps" onClick={openGoogleMaps}>
+          <button className="nav-btn nav-gmaps" onClick={() => openGoogleMaps(navQuery)}>
             <Navigation size={16} /> Google Maps
           </button>
-          <button className="nav-btn nav-waze" onClick={openWaze}>
+          <button className="nav-btn nav-waze" onClick={() => openWaze(navQuery)}>
             <Navigation size={16} /> Waze
           </button>
         </div>
@@ -186,12 +198,8 @@ function AccommodationModal({ accommodation, onClose }) {
 // Detail "page" for a single event, with navigation options.
 function ActivityModal({ activity, status, onClose }) {
   if (!activity) return null;
-  const [lat, lng] = activity.coordinates;
   const statusMeta = STATUS_META[status];
-  const openGoogleMaps = () =>
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
-  const openWaze = () =>
-    window.open(`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`, '_blank');
+  const navQuery = activityNavQuery(activity);
 
   return (
     <motion.div
@@ -245,11 +253,25 @@ function ActivityModal({ activity, status, onClose }) {
           <div className="activity-modal-desc">{activity.description}</div>
         )}
 
+        {activity.reservations && (
+          <div className="reservation-block">
+            <span className="reservation-label">
+              <Ticket size={14} /> Rental reservation
+            </span>
+            {activity.reservations.map((r) => (
+              <div className="reservation-row" key={r.number}>
+                <span className="reservation-who">{r.label}</span>
+                <span className="reservation-number">{r.number}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="accommodation-actions">
-          <button className="nav-btn nav-gmaps" onClick={openGoogleMaps}>
+          <button className="nav-btn nav-gmaps" onClick={() => openGoogleMaps(navQuery)}>
             <Navigation size={16} /> Google Maps
           </button>
-          <button className="nav-btn nav-waze" onClick={openWaze}>
+          <button className="nav-btn nav-waze" onClick={() => openWaze(navQuery)}>
             <Navigation size={16} /> Waze
           </button>
         </div>
@@ -338,18 +360,6 @@ export default function App() {
     }
   }, [filteredActivities, selectedDay]);
 
-  const openNavigation = (lat, lng, title) => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      window.open(`comgooglemaps://?q=${lat},${lng}(${encodeURIComponent(title)})`, '_blank');
-      setTimeout(() => {
-        window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
-      }, 500);
-    } else {
-      window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
-    }
-  };
-
   const createMarkerIcon = (color, sequence, status) => {
     return L.divIcon({
       className: 'custom-marker-wrapper',
@@ -393,6 +403,9 @@ export default function App() {
           <TileLayer
             attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            keepBuffer={8}
+            updateWhenZooming={false}
+            updateWhenIdle={true}
           />
           <MapUpdater center={mapCenter} zoom={mapZoom} />
           
@@ -414,15 +427,15 @@ export default function App() {
                   <p style={{ margin: '0 0 1rem 0', fontSize: '0.875rem' }}>
                     {format(parseISO(activity.date), 'MMM d')} • {activity.startTime}–{activity.endTime} • {activity.location}
                   </p>
-                  <button 
-                    onClick={() => openNavigation(activity.coordinates[0], activity.coordinates[1], activity.title)}
+                  <button
+                    onClick={() => setSelectedActivity(activity)}
                     style={{
-                      background: 'var(--accent)', color: '#fff', border: 'none', 
+                      background: 'var(--accent)', color: '#fff', border: 'none',
                       padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer',
                       display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', justifyContent: 'center'
                     }}
                   >
-                    <Navigation size={16} /> Navigate Here
+                    <Navigation size={16} /> View & Navigate
                   </button>
                 </div>
               </Popup>
@@ -450,7 +463,7 @@ export default function App() {
           animate={{ y: 0, opacity: 1 }}
           className="glass-panel header"
         >
-          <h1>NZ Trip '26</h1>
+          <h1>新西兰，新希望</h1>
           <div className="header-actions">
             <div className="time-control">
               <button
@@ -525,6 +538,18 @@ export default function App() {
             </button>
           ))}
         </motion.div>
+
+        {/* Recenter map on Queenstown */}
+        <button
+          className="recenter-btn"
+          onClick={() => {
+            setMapCenter(nzCenter);
+            setMapZoom(11);
+          }}
+          title="Recenter on Queenstown"
+        >
+          <Crosshair size={20} />
+        </button>
 
         {/* Timeline Bottom Sheet */}
         <motion.div 
@@ -648,7 +673,6 @@ export default function App() {
                       e.stopPropagation();
                       setMapCenter(activity.coordinates);
                       setMapZoom(14);
-                      setSelectedActivity(activity);
                     }}
                   >
                     <div className="activity-color-bar" style={{ backgroundColor: activity.color }}></div>
@@ -670,23 +694,18 @@ export default function App() {
                       <div className="activity-desc">{activity.description.split('\n')[0]}</div>
                     )}
                     <div className="activity-meta">
-                      <div className="activity-location" onClick={(e) => {
-                        e.stopPropagation();
-                        openNavigation(activity.coordinates[0], activity.coordinates[1], activity.title);
-                      }}>
+                      <div className="activity-location">
                         <MapPin size={14} /> {activity.location}
                       </div>
-                      {activity.link && (
-                        <a
-                          href={activity.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="activity-link"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ExternalLink size={12} /> Link
-                        </a>
-                      )}
+                      <button
+                        className="card-details-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedActivity(activity);
+                        }}
+                      >
+                        Details <ChevronRight size={14} />
+                      </button>
                     </div>
                   </motion.div>
                   );
