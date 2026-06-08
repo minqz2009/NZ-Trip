@@ -353,7 +353,7 @@ export const activities = [
     coordinates: [-45.0305, 168.6515],
     participants: FIVE,
     description:
-      "Skyline 缆车 + 无动力车，一人：NZD 140 → 无限次数无动力车；NZD 106 → 6次；5次和3次价格和6次就差个位数NZD，基本排除\nPremium 自助餐: 4:45/5/7:45/8pm",
+      "Skyline 缆车 + 无动力车，一人：NZD 140 → 无限次数无动力车；NZD 106 → 6次；5次和3次价格和6次就差个位数NZD，基本排除",
     sequence: 2,
     link: "https://queenstown.skyline.co.nz/things-to-do/queenstown-gondola/gondola-prices/",
   },
