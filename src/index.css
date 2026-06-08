@@ -146,7 +146,8 @@ body {
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  height: 320px;
+  height: auto;
+  max-height: 82vh;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.8);
   background: linear-gradient(to bottom, #ffffff, #f8fafc);
@@ -210,7 +211,8 @@ body {
   overflow-y: hidden;
   padding: 0.5rem 0.25rem 0.75rem 0.25rem;
   align-items: stretch;
-  height: 100%;
+  flex: 1 1 auto;
+  min-height: 200px;
 }
 
 .activities-list::-webkit-scrollbar {
@@ -1001,4 +1003,28 @@ body {
 .accommodation-booking-link:hover {
   background: var(--accent);
   color: #fff;
+}
+
+/* Activity-specific modal bits */
+.modal-status {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.7rem;
+}
+
+.activity-modal-desc {
+  white-space: pre-line;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+}
+
+/* Keep the modal scrollable on short screens so nothing is clipped */
+.accommodation-modal {
+  max-height: 88vh;
+  overflow-y: auto;
 }

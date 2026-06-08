@@ -183,6 +183,92 @@ function AccommodationModal({ accommodation, onClose }) {
   );
 }
 
+// Detail "page" for a single event, with navigation options.
+function ActivityModal({ activity, status, onClose }) {
+  if (!activity) return null;
+  const [lat, lng] = activity.coordinates;
+  const statusMeta = STATUS_META[status];
+  const openGoogleMaps = () =>
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+  const openWaze = () =>
+    window.open(`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`, '_blank');
+
+  return (
+    <motion.div
+      className="modal-backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="glass-panel accommodation-modal"
+        initial={{ y: 30, opacity: 0, scale: 0.97 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 20, opacity: 0, scale: 0.97 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button className="modal-close" onClick={onClose} aria-label="Close">
+          <X size={18} />
+        </button>
+
+        <div className="accommodation-modal-header">
+          <div className="accommodation-modal-icon" style={{ background: activity.color }}>
+            <MapPin size={22} />
+          </div>
+          <div>
+            <span className="accommodation-modal-eyebrow">
+              {format(parseISO(activity.date), 'EEE, MMM d')}
+            </span>
+            <h2>{activity.title}</h2>
+          </div>
+        </div>
+
+        <span className={`activity-status status-${status} modal-status`}>
+          {status === 'in-progress' && <span className="status-pulse" />}
+          {statusMeta.badge}
+        </span>
+
+        <div className="accommodation-detail-row">
+          <Clock size={16} />
+          <span>{activity.startTime} – {activity.endTime}</span>
+        </div>
+        <div className="accommodation-detail-row">
+          <MapPin size={16} />
+          <span>{activity.location}</span>
+        </div>
+        <div className="accommodation-detail-row">
+          <Users size={16} />
+          <span>{activity.participants.join(' · ')}</span>
+        </div>
+        {activity.description && (
+          <div className="activity-modal-desc">{activity.description}</div>
+        )}
+
+        <div className="accommodation-actions">
+          <button className="nav-btn nav-gmaps" onClick={openGoogleMaps}>
+            <Navigation size={16} /> Google Maps
+          </button>
+          <button className="nav-btn nav-waze" onClick={openWaze}>
+            <Navigation size={16} /> Waze
+          </button>
+        </div>
+
+        {activity.link && (
+          <a
+            href={activity.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="accommodation-booking-link"
+          >
+            <ExternalLink size={15} /> View details
+          </a>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedDay, setSelectedDay] = useState(days[0]); // Can be a specific day or 'All'
@@ -198,6 +284,7 @@ export default function App() {
   const [simulatedTime, setSimulatedTime] = useState(null);
   const [showTimeControl, setShowTimeControl] = useState(false);
   const [selectedAccommodation, setSelectedAccommodation] = useState(null);
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const now = simulatedTime || liveNow;
 
   useEffect(() => {
@@ -289,6 +376,13 @@ export default function App() {
           <AccommodationModal
             accommodation={selectedAccommodation}
             onClose={() => setSelectedAccommodation(null)}
+          />
+        )}
+        {selectedActivity && (
+          <ActivityModal
+            activity={selectedActivity}
+            status={getActivityStatus(selectedActivity, now)}
+            onClose={() => setSelectedActivity(null)}
           />
         )}
       </AnimatePresence>
@@ -554,6 +648,7 @@ export default function App() {
                       e.stopPropagation();
                       setMapCenter(activity.coordinates);
                       setMapZoom(14);
+                      setSelectedActivity(activity);
                     }}
                   >
                     <div className="activity-color-bar" style={{ backgroundColor: activity.color }}></div>
