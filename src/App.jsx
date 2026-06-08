@@ -374,12 +374,16 @@ export default function App() {
   // Re-center map when the selected day changes
   useEffect(() => {
     if (filteredActivities.length > 0) {
-      const lats = filteredActivities.map(a => a.coordinates[0]);
-      const lngs = filteredActivities.map(a => a.coordinates[1]);
-      const center = [
-        (Math.max(...lats) + Math.min(...lats)) / 2,
-        (Math.max(...lngs) + Math.min(...lngs)) / 2,
-      ];
+      const center = selectedDay === 'All'
+        ? (() => {
+            const lats = filteredActivities.map(a => a.coordinates[0]);
+            const lngs = filteredActivities.map(a => a.coordinates[1]);
+            return [
+              (Math.max(...lats) + Math.min(...lats)) / 2,
+              (Math.max(...lngs) + Math.min(...lngs)) / 2,
+            ];
+          })()
+        : filteredActivities[0].coordinates; // first activity of the day
       const zoom = selectedDay === 'All' ? 8 : QUEENSTOWN_ZOOM;
       setMapCenter(center);
       setMapZoom(zoom);
