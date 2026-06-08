@@ -694,7 +694,7 @@ export default function App() {
           </div>
 
           <div className="activities-list" style={{ marginTop: '1rem' }}>
-            <AnimatePresence initial={false}>
+            <AnimatePresence>
               {filteredActivities.length === 0 ? (
                 <motion.p
                   key="empty"
