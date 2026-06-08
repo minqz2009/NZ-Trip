@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,6 +15,9 @@ import {
   getAccommodationForDay,
   groupDaysByAccommodation,
 } from './data/schedule';
+
+// Zoom level used when recentering on Queenstown (town fills ~half the view)
+const QUEENSTOWN_ZOOM = 12;
 
 // Human-readable labels + badges for each activity status
 const STATUS_META = {
@@ -298,6 +301,16 @@ export default function App() {
   const [isTimelineExpanded, setIsTimelineExpanded] = useState(false);
   const [mapCenter, setMapCenter] = useState(nzCenter);
   const [mapZoom, setMapZoom] = useState(10);
+  const mapRef = useRef(null);
+
+  // Fly the map somewhere AND keep React state in sync. Commanding the map
+  // instance directly means it always moves — even if the target equals the
+  // current state (e.g. recentering twice, or after a manual pan).
+  const focusMap = (center, zoom) => {
+    setMapCenter(center);
+    setMapZoom(zoom);
+    mapRef.current?.flyTo(center, zoom, { duration: 1.2 });
+  };
 
   // ── Time awareness ──
   // liveNow ticks with the real clock; simulatedTime (when set) overrides it
@@ -399,7 +412,7 @@ export default function App() {
 
       {/* Map Background */}
       <div className="map-container">
-        <MapContainer center={mapCenter} zoom={mapZoom} zoomControl={false} style={{ width: '100%', height: '100%' }}>
+        <MapContainer ref={mapRef} center={mapCenter} zoom={mapZoom} zoomControl={false} style={{ width: '100%', height: '100%' }}>
           <TileLayer
             attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -415,10 +428,7 @@ export default function App() {
               position={activity.coordinates}
               icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now))}
               eventHandlers={{
-                click: () => {
-                  setMapCenter(activity.coordinates);
-                  setMapZoom(14);
-                }
+                click: () => focusMap(activity.coordinates, 14)
               }}
             >
               <Popup>
@@ -542,10 +552,7 @@ export default function App() {
         {/* Recenter map on Queenstown */}
         <button
           className="recenter-btn"
-          onClick={() => {
-            setMapCenter(nzCenter);
-            setMapZoom(11);
-          }}
+          onClick={() => focusMap(nzCenter, QUEENSTOWN_ZOOM)}
           title="Recenter on Queenstown"
         >
           <Crosshair size={20} />
@@ -671,8 +678,7 @@ export default function App() {
                     style={{ '--card-accent': activity.color }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setMapCenter(activity.coordinates);
-                      setMapZoom(14);
+                      focusMap(activity.coordinates, 14);
                     }}
                   >
                     <div className="activity-color-bar" style={{ backgroundColor: activity.color }}></div>
