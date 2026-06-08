@@ -117,7 +117,7 @@ export const activities = [
     description: "落地后在机场 Ezi Car Rental 取车，点开查看预订号",
     sequence: 2,
     isLogistics: true,
-    link: EZI_CAR_RENTAL.link,
+    link: "/NZ-Trip/car_rental_daniel.png",
     reservations: [RES_MAIN],
   },
   {
@@ -414,7 +414,7 @@ export const activities = [
     description: "CiCi & Kenny 在机场取车，点开查看预订号",
     sequence: 1,
     isLogistics: true,
-    link: EZI_CAR_RENTAL.link,
+    link: "/NZ-Trip/car_rental_kenny.png",
     reservations: [RES_CK],
   },
   {
@@ -484,7 +484,7 @@ export const activities = [
     description: "滑雪结束后在机场还车，点开查看两组预订号",
     sequence: 2,
     isLogistics: true,
-    link: EZI_CAR_RENTAL.link,
+    link: "/NZ-Trip/car_rental_daniel.png",
     reservations: [RES_MAIN, RES_CK],
   },
   {

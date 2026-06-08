@@ -265,16 +265,6 @@ function ActivityModal({ activity, status, onClose }) {
               <div className="reservation-row" key={r.number}>
                 <span className="reservation-who">{r.label}</span>
                 <span className="reservation-number">{r.number}</span>
-                {r.image && (
-                  <a
-                    href={r.image}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="activity-link"
-                  >
-                    <ExternalLink size={12} /> Order
-                  </a>
-                )}
               </div>
             ))}
           </div>
