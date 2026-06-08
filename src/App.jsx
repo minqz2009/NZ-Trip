@@ -201,6 +201,9 @@ function AccommodationModal({ accommodation, onClose }) {
 // Detail "page" for a single event, with navigation options.
 function ActivityModal({ activity, status, onClose }) {
   if (!activity) return null;
+  const [visibleImages, setVisibleImages] = useState({});
+  const toggleImage = (number) =>
+    setVisibleImages((prev) => ({ ...prev, [number]: !prev[number] }));
   const statusMeta = STATUS_META[status];
   const navQuery = activityNavQuery(activity);
 
@@ -266,8 +269,16 @@ function ActivityModal({ activity, status, onClose }) {
                 <div className="reservation-row">
                   <span className="reservation-who">{r.label}</span>
                   <span className="reservation-number">{r.number}</span>
+                  {r.image && (
+                    <button
+                      className="show-image-btn"
+                      onClick={() => toggleImage(r.number)}
+                    >
+                      {visibleImages[r.number] ? 'Hide' : 'View order'}
+                    </button>
+                  )}
                 </div>
-                {r.image && (
+                {r.image && visibleImages[r.number] && (
                   <a href={r.image} target="_blank" rel="noopener noreferrer">
                     <img
                       src={r.image}
@@ -331,6 +342,9 @@ export default function App() {
   const [showTimeControl, setShowTimeControl] = useState(false);
   const [selectedAccommodation, setSelectedAccommodation] = useState(null);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  // Tracks which activity pin is highlighted on the map (set on card click,
+  // independent of the modal so the highlight persists while modal is closed).
+  const [highlightedId, setHighlightedId] = useState(null);
   const now = simulatedTime || liveNow;
 
   useEffect(() => {
@@ -444,12 +458,15 @@ export default function App() {
           <MapUpdater center={mapCenter} zoom={mapZoom} />
           
           {filteredActivities.map((activity) => (
-            <Marker 
-              key={activity.id} 
+            <Marker
+              key={`${activity.id}-${highlightedId === activity.id}`}
               position={activity.coordinates}
-              icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now), selectedActivity?.id === activity.id)}
+              icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now), highlightedId === activity.id)}
               eventHandlers={{
-                click: () => focusMap(activity.coordinates, 14)
+                click: () => {
+                  focusMap(activity.coordinates, 14);
+                  setHighlightedId(activity.id);
+                }
               }}
             >
               <Popup>
@@ -700,6 +717,7 @@ export default function App() {
                     onClick={(e) => {
                       e.stopPropagation();
                       focusMap(activity.coordinates, 14);
+                      setHighlightedId(activity.id);
                     }}
                   >
                     <div className="activity-color-bar" style={{ backgroundColor: activity.color }}></div>
