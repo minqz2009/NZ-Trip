@@ -492,7 +492,9 @@ body {
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  width: 240px;
+  width: 270px;
+  max-width: calc(100vw - 1.5rem);
+  box-sizing: border-box;
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: var(--shadow-lg);
@@ -511,7 +513,13 @@ body {
 }
 
 .time-input {
+  display: block;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
   background: #f8fafc;
   border: 1px solid var(--border);
   border-radius: 0.6rem;
@@ -1187,6 +1195,7 @@ body {
     max-height: 90vh;
   }
   .time-popover {
-    width: 220px;
+    width: min(92vw, 300px);
+    padding: 1rem 0.9rem;
   }
 }
