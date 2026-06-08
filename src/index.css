@@ -1082,6 +1082,15 @@ body {
   color: var(--text-primary);
 }
 
+.reservation-image {
+  display: block;
+  width: 100%;
+  border-radius: 0.6rem;
+  margin-top: 0.5rem;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+}
+
 .reservation-number {
   font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
   font-weight: 800;

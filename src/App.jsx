@@ -262,9 +262,20 @@ function ActivityModal({ activity, status, onClose }) {
               <Ticket size={14} /> Rental reservation
             </span>
             {activity.reservations.map((r) => (
-              <div className="reservation-row" key={r.number}>
-                <span className="reservation-who">{r.label}</span>
-                <span className="reservation-number">{r.number}</span>
+              <div key={r.number}>
+                <div className="reservation-row">
+                  <span className="reservation-who">{r.label}</span>
+                  <span className="reservation-number">{r.number}</span>
+                </div>
+                {r.image && (
+                  <a href={r.image} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={r.image}
+                      alt={`${r.label} rental order`}
+                      className="reservation-image"
+                    />
+                  </a>
+                )}
               </div>
             ))}
           </div>

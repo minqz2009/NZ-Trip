@@ -85,8 +85,8 @@ const EZI_CAR_RENTAL = {
 };
 
 // Rental reservations
-const RES_MAIN = { label: "Daniel Chen & Rella", number: "R1QBF7" };
-const RES_CK = { label: "CiCi & Kenny", number: "R1QBFF" };
+const RES_MAIN = { label: "Daniel Chen & Rella", number: "R1QBF7", image: "/NZ-Trip/car_rental_daniel.png" };
+const RES_CK   = { label: "CiCi & Kenny",        number: "R1QBFF", image: "/NZ-Trip/car_rental_kenny.png"  };
 
 export const activities = [
   // ────── July 18 ──────
