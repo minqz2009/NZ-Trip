@@ -151,6 +151,20 @@ export const activities = [
 
   // ────── July 19 ──────
   {
+    id: "19-0",
+    date: "2026-07-19",
+    startTime: "09:00",
+    endTime: "13:00",
+    title: "✈️ Lucy's Flight to Queenstown (VA161)",
+    location: "Queenstown Airport (ZQN)",
+    coordinates: [-45.021, 168.739],
+    participants: ["Lucy"],
+    description: "Lucy 乘 VA161/VOZ161 飞往皇后镇",
+    sequence: 1,
+    isLogistics: true,
+    link: "https://zh.flightaware.com/live/flight/VOZ161",
+  },
+  {
     id: "19-1",
     date: "2026-07-19",
     startTime: "07:50",
@@ -161,59 +175,59 @@ export const activities = [
     participants: ["Yahnis & Gloria"],
     description:
       "最早 8am 一班\n淘宝 ¥2156.5 / Agoda A$451.55\n官网 NZ$549pp\nPhoto package 只能当天现场买",
-    sequence: 1,
+    sequence: 2,
     link: "https://www.nzoneskydive.co.nz/",
   },
   {
     id: "19-2",
     date: "2026-07-19",
-    startTime: "11:00",
+    startTime: "11:40",
     endTime: "13:00",
     title: "🍽️ Lunch in Queenstown",
     location: "Queenstown CBD",
     coordinates: [-45.0312, 168.6626],
     participants: FOUR,
     description: "市区午餐 (Lucy 尚未到达)",
-    sequence: 2,
+    sequence: 3,
   },
   {
     id: "19-3",
     date: "2026-07-19",
-    startTime: "12:20",
-    endTime: "13:10",
+    startTime: "13:00",
+    endTime: "13:30",
     title: "✈️ Pick Up Lucy",
     location: "Queenstown Airport (ZQN)",
     coordinates: [-45.021, 168.739],
     participants: ["Lucy"],
-    description: "Lucy 12:20pm 落地，约 1:00pm 领完行李\n1:10pm 去机场接",
-    sequence: 3,
+    description: "Lucy 落地后领取行李，开车去机场接",
+    sequence: 4,
     isLogistics: true,
   },
   {
     id: "19-4",
     date: "2026-07-19",
-    startTime: "13:30",
-    endTime: "15:00",
+    startTime: "13:15",
+    endTime: "14:30",
     title: "🚗 Drive to Horse Trek",
     location: "Dart Valley Rd, Glenorchy",
     coordinates: [-44.838, 168.38],
     participants: FIVE,
-    description: "约 1.5hr 车程前往 Lighthorse Adventures",
-    sequence: 4,
+    description: "约 1hr 15min 车程前往 Lighthorse Adventures",
+    sequence: 5,
     isLogistics: true,
   },
   {
     id: "19-5",
     date: "2026-07-19",
-    startTime: "15:00",
+    startTime: "14:30",
     endTime: "17:00",
     title: "🐴 Horse Riding",
     location: "Lighthorse Adventures, Glenorchy",
     coordinates: [-44.838, 168.38],
     participants: FIVE,
     description:
-      "1.5hr Walk Only NZ$209pp\n2.5hr Walk+Trot NZ$319-540pp\n过河看天气，≥105kg 需提前确认\n结束后开车回市区",
-    sequence: 5,
+      "30min 强制培训后出发\n1.5hr Walk Only NZ$209pp\n2.5hr Walk+Trot NZ$319-540pp\n过河看天气，≥105kg 需提前确认\n结束后开车回市区",
+    sequence: 6,
     link: "https://www.lighthorseadventures.com/",
   },
 
@@ -539,14 +553,14 @@ export function getDayStatus(dayStr, now) {
 }
 
 // Which accommodation covers a given 'YYYY-MM-DD' day.
-// On a transition day (checkout + checkin) the later check-in wins,
-// since that's where we actually sleep that night.
+// On a transition day (checkout + checkin same day) the checkout place
+// wins for grouping, so the separator line appears after the moving day
+// rather than before it (Jul 22 appears at the end of Dart Retreat).
 export function getAccommodationForDay(dayStr) {
-  let match = null;
   for (const acc of accommodations) {
-    if (dayStr >= acc.startDate && dayStr <= acc.endDate) match = acc;
+    if (dayStr >= acc.startDate && dayStr <= acc.endDate) return acc;
   }
-  return match;
+  return null;
 }
 
 // Group a list of consecutive day strings into accommodation blocks:
