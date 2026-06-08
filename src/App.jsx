@@ -459,8 +459,9 @@ export default function App() {
           
           {filteredActivities.map((activity) => (
             <Marker
-              key={`${activity.id}-${highlightedId === activity.id}`}
+              key={activity.id}
               position={activity.coordinates}
+              zIndexOffset={highlightedId === activity.id ? 1000 : 0}
               icon={createMarkerIcon(activity.color, activity.sequence, getActivityStatus(activity, now), highlightedId === activity.id)}
               eventHandlers={{
                 click: () => {
