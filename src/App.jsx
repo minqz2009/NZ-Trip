@@ -17,7 +17,7 @@ import {
 } from './data/schedule';
 
 // Zoom level used when recentering on Queenstown (town fills ~half the view)
-const QUEENSTOWN_ZOOM = 12;
+const QUEENSTOWN_ZOOM = 13;
 
 // Human-readable labels + badges for each activity status
 const STATUS_META = {
