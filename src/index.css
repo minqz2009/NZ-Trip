@@ -1082,33 +1082,6 @@ body {
   color: var(--text-primary);
 }
 
-.show-image-btn {
-  margin-left: auto;
-  flex-shrink: 0;
-  background: var(--accent-light);
-  color: var(--accent);
-  border: none;
-  border-radius: 0.45rem;
-  padding: 0.2rem 0.55rem;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.show-image-btn:hover {
-  background: var(--accent);
-  color: #fff;
-}
-
-.reservation-image {
-  display: block;
-  width: 100%;
-  border-radius: 0.6rem;
-  margin-top: 0.5rem;
-  border: 1px solid var(--border);
-  cursor: zoom-in;
-}
 
 .reservation-number {
   font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;

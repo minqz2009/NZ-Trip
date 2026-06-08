@@ -201,9 +201,6 @@ function AccommodationModal({ accommodation, onClose }) {
 // Detail "page" for a single event, with navigation options.
 function ActivityModal({ activity, status, onClose }) {
   if (!activity) return null;
-  const [visibleImages, setVisibleImages] = useState({});
-  const toggleImage = (number) =>
-    setVisibleImages((prev) => ({ ...prev, [number]: !prev[number] }));
   const statusMeta = STATUS_META[status];
   const navQuery = activityNavQuery(activity);
 
@@ -265,26 +262,17 @@ function ActivityModal({ activity, status, onClose }) {
               <Ticket size={14} /> Rental reservation
             </span>
             {activity.reservations.map((r) => (
-              <div key={r.number}>
-                <div className="reservation-row">
-                  <span className="reservation-who">{r.label}</span>
-                  <span className="reservation-number">{r.number}</span>
-                  {r.image && (
-                    <button
-                      className="show-image-btn"
-                      onClick={() => toggleImage(r.number)}
-                    >
-                      {visibleImages[r.number] ? 'Hide' : 'View order'}
-                    </button>
-                  )}
-                </div>
-                {r.image && visibleImages[r.number] && (
-                  <a href={r.image} target="_blank" rel="noopener noreferrer">
-                    <img
-                      src={r.image}
-                      alt={`${r.label} rental order`}
-                      className="reservation-image"
-                    />
+              <div className="reservation-row" key={r.number}>
+                <span className="reservation-who">{r.label}</span>
+                <span className="reservation-number">{r.number}</span>
+                {r.image && (
+                  <a
+                    href={r.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="activity-link"
+                  >
+                    <ExternalLink size={12} /> Order
                   </a>
                 )}
               </div>
