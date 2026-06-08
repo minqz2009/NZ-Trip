@@ -93,7 +93,7 @@ export const activities = [
   {
     id: "18-1",
     date: "2026-07-18",
-    startTime: "09:00",
+    startTime: "07:00",
     endTime: "13:00",
     title: "✈️ Flight to Queenstown (VA161)",
     location: "Queenstown Airport (ZQN)",
@@ -154,7 +154,7 @@ export const activities = [
   {
     id: "19-0",
     date: "2026-07-19",
-    startTime: "09:00",
+    startTime: "07:00",
     endTime: "13:00",
     title: "✈️ Lucy's Flight to Queenstown (VA161)",
     location: "Queenstown Airport (ZQN)",
