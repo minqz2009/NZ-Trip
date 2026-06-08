@@ -153,8 +153,8 @@ export const activities = [
   {
     id: "19-1",
     date: "2026-07-19",
-    startTime: "06:30",
-    endTime: "11:00",
+    startTime: "07:50",
+    endTime: "11:30",
     title: "🪂 NZONE Skydive",
     location: "35 Shotover St, Queenstown",
     coordinates: [-45.031265, 168.659708],
