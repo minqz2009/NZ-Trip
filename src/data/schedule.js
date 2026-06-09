@@ -228,9 +228,10 @@ export const activities = [
     coordinates: [-44.838, 168.38],
     participants: FIVE,
     description:
-      "已预订 ✅ 订单号 RWH0QFB\n30min 强制培训后出发\n过河看天气，≥105kg 需提前确认\n结束后开车回市区",
+      "30min 强制培训后出发\n过河看天气，≥105kg 需提前确认\n结束后开车回市区",
     sequence: 6,
     link: "https://lighthorseadventures.rezdy.com/print/RWH0QFB?hash=14d880068e7a88f8aa656eb9c4d10c1f",
+    reservations: [{ label: "Lighthorse Adventures", number: "RWH0QFB" }],
   },
 
   {
@@ -325,10 +326,10 @@ export const activities = [
     location: "Lapsley Butson Wharf, Queenstown",
     coordinates: [-45.032, 168.661],
     participants: FIVE,
-    description:
-      "已预订 ✅ 订单号 28930\n两场各 2 人：9:30am 一场 / 9:50am 一场",
+    description: "两场各 2 人：9:30am 一场 / 9:50am 一场",
     sequence: 1,
     link: "https://book.hydroattack.co.nz/receipt/index?id=hjayyvsves-ct7-pxe",
+    reservations: [{ label: "Hydro Attack", number: "28930" }],
   },
   {
     id: "21-2",
@@ -383,12 +384,16 @@ export const activities = [
     location: "1081 Cardrona Valley Rd, Cardrona",
     coordinates: [-44.88, 168.95],
     participants: FIVE,
-    description:
-      "已预订 ✅ 订单号 354230019\n目标 10:00am 场次\nNZ$184.13pp (supervised shooting)",
+    description: "目标 10:00am 场次\nNZ$184.13pp (supervised shooting)",
     sequence: 2,
-    link: "https://fareharbor.com/embeds/checkin/realguns/bookings/ce8d8c0b-ce04-4d66-8341-a91f1ea56374/?source=web&back=https://www.realguns.nz/%23!/shooting",
+    link: "/NZ-Trip/realguns.png",
     reservations: [
-      { label: "Real Guns NZ", number: "354230019", image: "/NZ-Trip/realguns.png" },
+      {
+        label: "Real Guns NZ",
+        number: "354230019",
+        ticketUrl:
+          "https://fareharbor.com/embeds/checkin/realguns/bookings/ce8d8c0b-ce04-4d66-8341-a91f1ea56374/?source=web&back=https://www.realguns.nz/%23!/shooting",
+      },
     ],
   },
   {

@@ -259,12 +259,32 @@ function ActivityModal({ activity, status, onClose }) {
         {activity.reservations && (
           <div className="reservation-block">
             <span className="reservation-label">
-              <Ticket size={14} /> Rental reservation
+              <Ticket size={14} /> Reservation
             </span>
             {activity.reservations.map((r) => (
               <div className="reservation-row" key={r.number}>
                 <span className="reservation-who">{r.label}</span>
                 <span className="reservation-number">{r.number}</span>
+                {r.ticketUrl && (
+                  <a
+                    href={r.ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="reservation-action"
+                  >
+                    <Ticket size={12} /> Tickets
+                  </a>
+                )}
+                {r.image && (
+                  <a
+                    href={r.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="reservation-action"
+                  >
+                    <ExternalLink size={12} /> View order
+                  </a>
+                )}
               </div>
             ))}
           </div>
@@ -289,17 +309,6 @@ function ActivityModal({ activity, status, onClose }) {
             <ExternalLink size={15} /> View details
           </a>
         )}
-        {activity.reservations?.filter(r => r.image).map(r => (
-          <a
-            key={r.number}
-            href={r.image}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="accommodation-booking-link"
-          >
-            <ExternalLink size={15} /> View order – {r.label}
-          </a>
-        ))}
       </motion.div>
     </motion.div>
   );
