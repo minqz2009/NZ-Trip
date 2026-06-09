@@ -117,7 +117,6 @@ export const activities = [
     description: "落地后在机场 Ezi Car Rental 取车，点开查看预订号",
     sequence: 2,
     isLogistics: true,
-    link: "/NZ-Trip/car_rental_daniel.png",
     reservations: [RES_MAIN],
   },
   {
@@ -210,7 +209,8 @@ export const activities = [
     startTime: "13:15",
     endTime: "14:30",
     title: "🚗 Drive to Horse Trek",
-    location: "Dart Valley Rd, Glenorchy",
+    location: "Lighthorse Adventures, 2 Swamp Rd, Glenorchy",
+    navAddress: "2 Swamp Road, Glenorchy 9372, Glenorchy Otago 9372 New Zealand",
     coordinates: [-44.838, 168.38],
     participants: FIVE,
     description: "约 1hr 15min 车程前往 Lighthorse Adventures",
@@ -223,13 +223,14 @@ export const activities = [
     startTime: "14:30",
     endTime: "17:00",
     title: "🐴 Horse Riding",
-    location: "Lighthorse Adventures, Glenorchy",
+    location: "Lighthorse Adventures, 2 Swamp Rd, Glenorchy",
+    navAddress: "2 Swamp Road, Glenorchy 9372, Glenorchy Otago 9372 New Zealand",
     coordinates: [-44.838, 168.38],
     participants: FIVE,
     description:
-      "30min 强制培训后出发\n1.5hr Walk Only NZ$209pp\n2.5hr Walk+Trot NZ$319-540pp\n过河看天气，≥105kg 需提前确认\n结束后开车回市区",
+      "已预订 ✅ 订单号 RWH0QFB\n30min 强制培训后出发\n过河看天气，≥105kg 需提前确认\n结束后开车回市区",
     sequence: 6,
-    link: "https://www.lighthorseadventures.com/",
+    link: "https://lighthorseadventures.rezdy.com/print/RWH0QFB?hash=14d880068e7a88f8aa656eb9c4d10c1f",
   },
 
   {
@@ -318,16 +319,16 @@ export const activities = [
   {
     id: "21-1",
     date: "2026-07-21",
-    startTime: "09:00",
-    endTime: "11:00",
+    startTime: "09:30",
+    endTime: "10:30",
     title: "🦈 Hydro Attack (Shark Boat)",
     location: "Lapsley Butson Wharf, Queenstown",
     coordinates: [-45.032, 168.661],
     participants: FIVE,
     description:
-      "位置不多，需要尽快预订！",
+      "已预订 ✅ 订单号 28930\n两场各 2 人：9:30am 一场 / 9:50am 一场",
     sequence: 1,
-    link: "https://book.hydroattack.co.nz/",
+    link: "https://book.hydroattack.co.nz/receipt/index?id=hjayyvsves-ct7-pxe",
   },
   {
     id: "21-2",
@@ -383,9 +384,12 @@ export const activities = [
     coordinates: [-44.88, 168.95],
     participants: FIVE,
     description:
-      "目标 10:00am 场次\nNZ$184.13pp (supervised shooting)\n需提前预约",
+      "已预订 ✅ 订单号 354230019\n目标 10:00am 场次\nNZ$184.13pp (supervised shooting)",
     sequence: 2,
-    link: "https://www.realguns.nz/",
+    link: "https://fareharbor.com/embeds/checkin/realguns/bookings/ce8d8c0b-ce04-4d66-8341-a91f1ea56374/?source=web&back=https://www.realguns.nz/%23!/shooting",
+    reservations: [
+      { label: "Real Guns NZ", number: "354230019", image: "/NZ-Trip/realguns.png" },
+    ],
   },
   {
     id: "22-3",
@@ -428,7 +432,6 @@ export const activities = [
     description: "落地后直接在机场 Ezi Car Rental 取车\n注意：租车行 11pm 关门，务必准时",
     sequence: 5,
     isLogistics: true,
-    link: "/NZ-Trip/car_rental_kenny.png",
     reservations: [RES_CK],
   },
 
@@ -500,7 +503,6 @@ export const activities = [
     description: "滑雪结束后在机场还车，点开查看两组预订号",
     sequence: 2,
     isLogistics: true,
-    link: "/NZ-Trip/car_rental_daniel.png",
     reservations: [RES_MAIN, RES_CK],
   },
   {

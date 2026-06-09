@@ -279,29 +279,27 @@ function ActivityModal({ activity, status, onClose }) {
           </button>
         </div>
 
-        {activity.reservations?.some(r => r.image)
-          ? activity.reservations.filter(r => r.image).map(r => (
-              <a
-                key={r.number}
-                href={r.image}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="accommodation-booking-link"
-              >
-                <ExternalLink size={15} /> View details – {r.label}
-              </a>
-            ))
-          : activity.link && (
-              <a
-                href={activity.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="accommodation-booking-link"
-              >
-                <ExternalLink size={15} /> View details
-              </a>
-            )
-        }
+        {activity.link && (
+          <a
+            href={activity.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="accommodation-booking-link"
+          >
+            <ExternalLink size={15} /> View details
+          </a>
+        )}
+        {activity.reservations?.filter(r => r.image).map(r => (
+          <a
+            key={r.number}
+            href={r.image}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="accommodation-booking-link"
+          >
+            <ExternalLink size={15} /> View order – {r.label}
+          </a>
+        ))}
       </motion.div>
     </motion.div>
   );
