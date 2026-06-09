@@ -633,12 +633,13 @@ body {
   align-items: center;
   gap: 0.35rem;
   font-size: 0.68rem;
+  line-height: 1.2;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: var(--text-secondary);
   white-space: nowrap;
-  padding-left: 0.15rem;
+  padding: 0.15rem 0.3rem;
 }
 
 .day-group.is-current .day-group-label {
@@ -807,13 +808,8 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
-  font: inherit;
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--text-secondary);
-  padding: 0.15rem 0.3rem;
+  font-family: inherit;
+  line-height: 1.2;
   border-radius: 0.45rem;
   transition: all 0.2s ease;
 }
