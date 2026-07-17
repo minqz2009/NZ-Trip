@@ -2,8 +2,9 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Navigation, Calendar, Users, Lock, ExternalLink, Clock, Home, RotateCcw, ChevronRight, X, Crosshair, Ticket } from 'lucide-react';
+import { MapPin, Navigation, Calendar, Users, Lock, ExternalLink, Clock, Home, RotateCcw, ChevronRight, X, Crosshair, Ticket, Box } from 'lucide-react';
 import { format, parseISO, differenceInCalendarDays } from 'date-fns';
+import BootPackingModal from './BootPackingModal';
 import {
   activities,
   days,
@@ -200,11 +201,13 @@ function AccommodationModal({ accommodation, onClose }) {
 
 // Detail "page" for a single event, with navigation options.
 function ActivityModal({ activity, status, onClose }) {
+  const [showBootModal, setShowBootModal] = useState(false);
   if (!activity) return null;
   const statusMeta = STATUS_META[status];
   const navQuery = activityNavQuery(activity);
 
   return (
+    <>
     <motion.div
       className="modal-backdrop"
       initial={{ opacity: 0 }}
@@ -290,6 +293,12 @@ function ActivityModal({ activity, status, onClose }) {
           </div>
         )}
 
+        {activity.showBootPacking && (
+          <button className="boot-packing-btn" onClick={() => setShowBootModal(true)}>
+            <Box size={16} /> How to pack the boot (luggage &amp; skis)
+          </button>
+        )}
+
         <div className="accommodation-actions">
           <button className="nav-btn nav-gmaps" onClick={() => openGoogleMaps(navQuery)}>
             <Navigation size={16} /> Google Maps
@@ -311,6 +320,10 @@ function ActivityModal({ activity, status, onClose }) {
         )}
       </motion.div>
     </motion.div>
+    <AnimatePresence>
+      {showBootModal && <BootPackingModal onClose={() => setShowBootModal(false)} />}
+    </AnimatePresence>
+    </>
   );
 }
 

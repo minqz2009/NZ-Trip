@@ -118,6 +118,7 @@ export const activities = [
     sequence: 2,
     isLogistics: true,
     reservations: [RES_MAIN],
+    showBootPacking: true,
   },
   {
     id: "18-2",
@@ -438,6 +439,7 @@ export const activities = [
     sequence: 5,
     isLogistics: true,
     reservations: [RES_CK],
+    showBootPacking: true,
   },
 
   // ────── July 23 ──────

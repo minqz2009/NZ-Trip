@@ -1134,6 +1134,145 @@ body {
   color: #fff;
 }
 
+/* "How to pack the boot" launcher button in the activity modal */
+.boot-packing-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 0.85rem;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.boot-packing-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+}
+
+/* 3D boot-packing modal */
+.boot-modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.boot-modal-head h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  padding-right: 2rem;
+}
+
+.boot-modal-head p {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.boot-canvas {
+  width: 100%;
+  height: min(58vh, 440px);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #eef2f7;
+  border: 1px solid var(--border);
+  touch-action: none;
+  cursor: grab;
+}
+
+.boot-canvas:active {
+  cursor: grabbing;
+}
+
+.boot-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.boot-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.boot-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.boot-note {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  padding: 0.75rem 0.9rem;
+}
+
+.boot-reset {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.boot-reset:hover {
+  background: #f1f5f9;
+}
+
+.boot-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.boot-ski-toggle.is-on {
+  background: #ede9fe;
+  border-color: #7c3aed;
+  color: #5b21b6;
+}
+
+.boot-ski-toggle.is-on:hover {
+  background: #ddd6fe;
+}
+
 .activity-location {
   min-width: 0;
   overflow: hidden;
@@ -1219,6 +1358,15 @@ body {
     border-radius: 1.25rem 1.25rem 0 0;
     padding: 1.5rem 1.25rem 2rem;
     max-height: 90vh;
+  }
+  .boot-modal {
+    max-width: 100%;
+    border-radius: 1.25rem 1.25rem 0 0;
+    padding: 1.25rem 1rem 1.75rem;
+    max-height: 94vh;
+  }
+  .boot-canvas {
+    height: 52vh;
   }
   .time-popover {
     width: min(92vw, 300px);
